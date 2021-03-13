@@ -1,2 +1,2 @@
-# Multi_Intent_RecSys
-Multi Intent Next Basket Recommendation
+# MC Net
+Markov chain neural net for Recommendation
