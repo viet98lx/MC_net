@@ -19,9 +19,6 @@ torch.set_printoptions(precision=8)
 parser = argparse.ArgumentParser(description='Train model')
 
 parser.add_argument('--batch_size', type=int, help='batch size of data set (default:32)', default=32)
-parser.add_argument('--rnn_units', type=int, help='number units of hidden size lstm', default=16)
-parser.add_argument('--rnn_layers', type=int, help='number layers of RNN', default=1)
-parser.add_argument('--alpha', type=float, help='coefficient of C matrix in predict item score', default=0.4)
 parser.add_argument('--lr', type=float, help='learning rate of optimizer', default=0.001)
 parser.add_argument('--dropout', type=float, help='drop out after linear model', default= 0.2)
 parser.add_argument('--embed_dim', type=int, help='dimension of linear layers', default=8)
@@ -40,8 +37,6 @@ seed = args.seed
 torch.manual_seed(seed)
 
 config_param={}
-config_param['rnn_units'] = args.rnn_units
-config_param['rnn_layers'] = args.rnn_layers
 config_param['dropout'] = args.dropout
 config_param['embedding_dim'] = args.embed_dim
 config_param['batch_size'] = args.batch_size
@@ -108,7 +103,8 @@ print(rec_sys_model)
 for param in rec_sys_model.parameters():
   print(param.shape)
 
-loss_func = loss.Weighted_BCE_Loss()
+# loss_func = loss.Weighted_BCE_Loss()
+loss_func = nn.BCELoss()
 optimizer = torch.optim.RMSprop(rec_sys_model.parameters(), lr= args.lr, weight_decay= 1e-6)
 
 try:
@@ -190,6 +186,3 @@ for ep in range(epoch):
         recall_max = avg_test_recall
 
     print('-' * 100)
-    # ckpt_path = checkpoint_dir+model_name+'/epoch_'+str(ep)+'/'
-    # utils.plot_loss(train_losses, val_losses, ckpt_path)
-    # utils.plot_recall(train_recalls, val_recalls, ckpt_path)

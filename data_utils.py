@@ -37,7 +37,7 @@ def seq_generator(raw_lines, item_dict):
         elements = line.split("|")
 
         # label = float(elements[0])
-        bseq = elements[1:-1]
+        bseq = elements[-2]
         tbasket = elements[-1]
 
         # Keep the length for dynamic_rnn
@@ -50,12 +50,8 @@ def seq_generator(raw_lines, item_dict):
         target_item_list = re.split('[\\s]+', tbasket.strip())
         Y.append(create_binary_vector(target_item_list, item_dict))
 
-        s = []
-        for basket in bseq:
-            item_list = re.split('[\\s]+', basket.strip())
-            id_list = [item_dict[item] for item in item_list]
-            s.append(id_list)
-        S.append(s)
+        item_list = re.split('[\\s]+', bseq.strip())
+        S.append(create_binary_vector(item_list, item_dict))
 
     return {'S': np.asarray(S), 'L': np.asarray(L), 'Y': np.asarray(Y), 'O': np.asarray(O)}
 
@@ -79,18 +75,20 @@ def get_sparse_tensor_info(x, is_bseq=False):
 
 def generate_data_loader(data_instances, b_size, item_dict, max_seq_len, is_bseq, is_shuffle):
     data_seq = seq_generator(data_instances, item_dict)
-    sparse_seq_indices, sparse_seq_values = get_sparse_tensor_info(data_seq['S'], is_bseq)
-    sparse_seq_indices = torch.transpose(sparse_seq_indices, 0, 1)
-
-    sparse_X = torch.sparse_coo_tensor(indices = sparse_seq_indices, values = sparse_seq_values,
-                                       size=[len(data_seq['S']), max_seq_len, len(item_dict)])
-    print(sparse_X)
+    # sparse_seq_indices, sparse_seq_values = get_sparse_tensor_info(data_seq['S'], is_bseq)
+    # sparse_seq_indices = torch.transpose(sparse_seq_indices, 0, 1)
+    #
+    # sparse_X = torch.sparse_coo_tensor(indices = sparse_seq_indices, values = sparse_seq_values,
+    #                                    size=[len(data_seq['S']), max_seq_len, len(item_dict)])
+    # print(sparse_X)
+    X = torch.FloatTensor(data_seq['S'])
+    print(X.shape)
 
     Y = torch.FloatTensor(data_seq['Y'])
     print(Y.shape)
 
     seq_len = torch.IntTensor(data_seq['L'])
 
-    dataset = TensorDataset(sparse_X, seq_len, Y)
+    dataset = TensorDataset(X, seq_len, Y)
     data_loader = DataLoader(dataset=dataset, batch_size= b_size, shuffle= is_shuffle)
     return data_loader
