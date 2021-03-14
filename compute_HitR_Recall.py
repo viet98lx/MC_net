@@ -1,5 +1,6 @@
 import argparse
 import numpy as np
+import re
 
 parser = argparse.ArgumentParser(description='Calculate recall')
 parser.add_argument('--result_file', type=str, help='file contains predicted result', required=True)
@@ -15,8 +16,8 @@ with open(result_file, 'r') as f:
         # if(i == 0):
         #     continue
         if(i % 2 == 0):
-            ground_truth = line.split('|')[1:]
-            list_item = ground_truth.split()
+            ground_truth = line.split('|')[1]
+            list_item = re.split('[\\s]+',ground_truth.strip())
             list_seq.append(list_item.copy())
             list_item.clear()
         if(i % 2 == 1):
