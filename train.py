@@ -41,15 +41,12 @@ config_param['dropout'] = args.dropout
 config_param['embedding_dim'] = args.embed_dim
 config_param['batch_size'] = args.batch_size
 config_param['top_k'] = args.top_k
-config_param['alpha'] = args.alpha
 
 data_dir = args.data_dir
 output_dir = args.output_dir
-nb_hop = args.nb_hop
 
-torch.manual_seed(1)
-np.random.seed(2)
-random.seed(3)
+np.random.seed(seed)
+random.seed(seed)
 
 train_data_path = data_dir + 'train_lines.txt'
 train_instances = utils.read_instances_lines_from_file(train_data_path)
