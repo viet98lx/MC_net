@@ -41,6 +41,7 @@ config_param['dropout'] = args.dropout
 config_param['embedding_dim'] = args.embed_dim
 config_param['batch_size'] = args.batch_size
 config_param['top_k'] = args.top_k
+# nb_hop = args.nb_hop
 
 data_dir = args.data_dir
 output_dir = args.output_dir
@@ -73,13 +74,13 @@ NB_ITEMS = len(item_dict)
 print(" + Maximum sequence length: ", MAX_SEQ_LENGTH)
 print(" + Total items: ", NB_ITEMS)
 
-print('---------------------Load correlation matrix-------------------')
-
-if (os.path.isfile(data_dir + 'adj_matrix/r_matrix_' +str(nb_hop)+ 'w.npz')):
-    real_adj_matrix = sp.load_npz(data_dir + 'adj_matrix/r_matrix_' + str(nb_hop)+ 'w.npz')
-else:
-    real_adj_matrix = sp.csr_matrix((NB_ITEMS, NB_ITEMS), dtype="float32")
-print('Density of correlation matrix: %.6f' % (real_adj_matrix.nnz * 1.0 / NB_ITEMS / NB_ITEMS))
+# print('---------------------Load correlation matrix-------------------')
+#
+# if (os.path.isfile(data_dir + 'adj_matrix/r_matrix_' +str(nb_hop)+ 'w.npz')):
+#     real_adj_matrix = sp.load_npz(data_dir + 'adj_matrix/r_matrix_' + str(nb_hop)+ 'w.npz')
+# else:
+#     real_adj_matrix = sp.csr_matrix((NB_ITEMS, NB_ITEMS), dtype="float32")
+# print('Density of correlation matrix: %.6f' % (real_adj_matrix.nnz * 1.0 / NB_ITEMS / NB_ITEMS))
 
 print('---------------------Create data loader--------------------')
 train_loader = data_utils.generate_data_loader(train_instances, config_param['batch_size'], item_dict, MAX_SEQ_LENGTH, is_bseq=True, is_shuffle=True)
