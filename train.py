@@ -101,8 +101,8 @@ print(rec_sys_model)
 for param in rec_sys_model.parameters():
   print(param.shape)
 
-# loss_func = loss.Weighted_BCE_Loss()
-loss_func = nn.BCELoss()
+loss_func = loss.Weighted_BCE_Loss()
+# loss_func = nn.BCELoss()
 optimizer = torch.optim.RMSprop(rec_sys_model.parameters(), lr= args.lr, weight_decay= 1e-6)
 
 try:
