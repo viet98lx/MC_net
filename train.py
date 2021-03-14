@@ -164,6 +164,7 @@ for ep in range(epoch):
     writer.add_scalar("Loss/val", avg_val_loss, ep)
     writer.add_scalar("Recall/val", avg_val_recall, ep)
 
+
     avg_test_loss, avg_test_recall = model_utils.test_model(rec_sys_model, loss_func, test_loader,
                                                             ep, top_k, test_display_step)
     # test_losses.append(avg_test_loss)
