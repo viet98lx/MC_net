@@ -20,7 +20,7 @@ with open(result_file, 'r') as f:
             list_seq.append(list_item.copy())
             list_item.clear()
         if(i % 2 == 1):
-            predicted_items = line.split('|')[1:top_k+1]
+            predicted_items = line.split('|')[1:]
             list_top_k_item = []
             for item in predicted_items:
                 item_key = item.strip().split(':')[0]
