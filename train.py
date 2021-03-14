@@ -91,7 +91,7 @@ print('---------------------Create model------------------------')
 print(args.device)
 exec_device = torch.device('cuda' if (args.device != 'cpu' and torch.cuda.is_available()) else 'cpu')
 data_type = torch.float32
-rec_sys_model = model.RecSysModel(config_param, MAX_SEQ_LENGTH, item_probs, real_adj_matrix.todense(), exec_device, data_type)
+rec_sys_model = model.RecSysModel(config_param, MAX_SEQ_LENGTH, item_probs, exec_device, data_type)
 rec_sys_model.to(exec_device, dtype= data_type)
 
 print('-----------------SUMMARY MODEL----------------')
