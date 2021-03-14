@@ -46,7 +46,7 @@ parser.add_argument('--ckpt_dir', type=str, help='folder contains check point', 
 parser.add_argument('--model_name', type=str, help='name of model', required=True)
 # parser.add_argument('--epoch', type=int, help='last epoch before interrupt', required=True)
 parser.add_argument('--data_dir', type=str, help='folder contains data', required=True)
-parser.add_argument('--nb_hop', type=int, help='level of correlation matrix', default=1)
+# parser.add_argument('--nb_hop', type=int, help='level of correlation matrix', default=1)
 parser.add_argument('--batch_size', type=int, help='batch size predict', default=8)
 parser.add_argument('--nb_predict', type=int, help='number items predicted', default=30)
 # parser.add_argument('--log_result_dir', type=str, help='folder to save result', required=True)
@@ -56,7 +56,7 @@ args = parser.parse_args()
 prefix_model_ckpt = args.model_name
 ckpt_dir = args.ckpt_dir
 data_dir = args.data_dir
-real_adj_matrix = sp.load_npz(data_dir + 'adj_matrix/r_matrix_'+ str(args.nb_hop) + 'w.npz')
+# real_adj_matrix = sp.load_npz(data_dir + 'adj_matrix/r_matrix_'+ str(args.nb_hop) + 'w.npz')
 
 train_data_path = data_dir + 'train_lines.txt'
 train_instances = utils.read_instances_lines_from_file(train_data_path)
